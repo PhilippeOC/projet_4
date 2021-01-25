@@ -1,4 +1,5 @@
 import datetime
+import utilities
 
 
 class PlayerExcept(Exception):
@@ -14,22 +15,25 @@ class Player:
             setattr(self, attr_name, attr_value)
 
     def serialize(self, serialized_players):
-        p_dict = {"lastname": self.__lastname, "firstname": self.__firstname, "datebirth": self.__datebirth, "sex": self.__sex, "ranking": self.__ranking}
+        p_dict = {"lastname": self.__lastname,
+                  "firstname": self.__firstname,
+                  "datebirth": self.__datebirth,
+                  "sex": self.__sex,
+                  "ranking": self.__ranking}
         serialized_players.append(p_dict)
         return serialized_players
 
-    def alphabetical_order(self, serialized_players):
-        pass
-        return serialized_players
-
+   
     @property
     def lastname(self):
         return self.__lastname
 
     @lastname.setter
     def lastname(self, last_name):
+        if utilities.check_name(last_name):
+            raise PlayerExcept("name_error_1", "Le nom ne doit contenir que des lettres.")
         if len(last_name) < 2:
-            raise PlayerExcept("name_error", "Le nom doit contenir au moins deux caractères")
+            raise PlayerExcept("name_error_2", "Le nom doit contenir au moins deux caractères.")
         self.__lastname = last_name.upper()
 
     @property
@@ -38,8 +42,10 @@ class Player:
 
     @firstname.setter
     def firstname(self, first_name):
+        if utilities.check_name(first_name):
+            raise PlayerExcept("first_name_error_1", "Le prénom ne doit contenir que des lettres.")
         if len(first_name) < 2:
-            raise PlayerExcept("first_name_error", "Le prénom doit contenir au moins deux caractères")
+            raise PlayerExcept("first_name_error_2", "Le prénom doit contenir au moins deux caractères.")
         self.__firstname = first_name.capitalize()
 
     @property
@@ -52,13 +58,13 @@ class Player:
         try:
             db = datetime.datetime.strptime(born, '%d-%m-%Y')
         except ValueError:
-            raise PlayerExcept("date_error", "{}: vérifier le format de la date".format(born))
+            raise PlayerExcept("date_error", "{}: vérifier le format de la date.".format(born))
         else:
             dt = datetime.date.today()
             age = dt.year - db.year - ((dt.month, dt.day) < (db.month, db.day))
             if age < limit_age:
-                raise PlayerExcept("age_error", "Vous devez avoir plus de {} ans pour participer".format(limit_age))
-            print("age:", str(age) + " ans")
+                raise PlayerExcept("age_error", "Vous devez avoir plus de {} ans pour participer.".format(limit_age))
+            #print("age:", str(age) + " ans")
         self.__datebirth = born
 
     @property
@@ -69,7 +75,7 @@ class Player:
     def sex(self, sex):
         if sex.upper() != 'M':
             if sex.upper() != 'F':
-                raise PlayerExcept("sex_error", "impossible, saisir M ou F")
+                raise PlayerExcept("sex_error", "impossible, saisir M ou F.")
         self.__sex = sex.upper()
 
     @property
@@ -78,7 +84,8 @@ class Player:
 
     @ranking.setter
     def ranking(self, rank):
-        # validations
+        if rank < 0:
+            raise PlayerExcept("rank_error", "Le classement est un nombre positif.")
         self.__ranking = rank
 
 
@@ -94,11 +101,11 @@ p2 = Player(**player_dict2)
 print(p1.serialize(serialized_players))
 print(p2.serialize(serialized_players))
 
-print(player_dict)
+"""print(player_dict)
 print(player_dict2)
 
 print("date de naissance 1:", p1.datebirth)
 print("prénom 1:", p1.firstname)
 
 print("date de naissance 2:", p2.datebirth)
-print("prénom 2:", p2.firstname)
+print("prénom 2:", p2.firstname)"""
