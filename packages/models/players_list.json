@@ -1,9 +1,0 @@
-[{"lastname": "jumbo", "firstname": "BABAR", "datebirth": "28-01-2000", "sex": "m", "ranking": 100},
-{"lastname": "Starsky", "firstname": "hutch", "datebirth": "01-10-1990", "sex": "m", "ranking": 500},
-{"lastname": "jackson", "firstname": "michael", "datebirth": "25-08-1965", "sex": "m", "ranking": 1000},
-{"lastname": "Poe", "firstname": "edgar", "datebirth": "01-10-1930", "sex": "m", "ranking": 2000},
-{"lastname": "macron", "firstname": "emmanuel", "datebirth": "21-12-1977", "sex": "m", "ranking": 0},
-{"lastname": "macron", "firstname": "brigitte", "datebirth": "13-04-1953", "sex": "f", "ranking": 2},
-{"lastname": "bardot", "firstname": "brigitte", "datebirth": "28-09-1934", "sex": "f", "ranking": 2500},
-{"lastname": "sharapova", "firstname": "maria", "datebirth": "19-04-1987", "sex": "f", "ranking": 3000}
-]
